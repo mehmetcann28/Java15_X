@@ -9,11 +9,16 @@ import com.mcann.java15_x.exception.Java15XException;
 import com.mcann.java15_x.mapper.UserMapper;
 import com.mcann.java15_x.repository.UserRepository;
 import com.mcann.java15_x.utility.JwtManager;
+import com.mcann.java15_x.views.VwUser;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.TreeMap;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -51,5 +56,10 @@ public class UserService {
 			throw new Java15XException(ErrorType.NOTFOUND_USER);
 		}
 		return userOptional.get();
+	}
+	
+	public Map<Long,VwUser> findAllByIds(List<Long> userIds) {
+		return userRepository.findAllByUserIds(userIds).stream()
+				.collect(Collectors.toMap(VwUser::id, vwUser -> vwUser));
 	}
 }

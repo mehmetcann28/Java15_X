@@ -19,5 +19,5 @@ public interface PostMapper {
 	@Mapping(target = "viewCount",expression = "java(Integer.valueOf(0))")
 	Post fromNewPost(final NewPostRequestDto dto,final Long userId);
 	
-	AllPostsResponseDto fromPostandUser(final Post post,String userName,String name, String avatar);
+	AllPostsResponseDto fromPostAndUser(final Post post,String userName,String name, String avatar);
 }
