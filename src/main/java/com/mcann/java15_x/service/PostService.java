@@ -1,6 +1,7 @@
 package com.mcann.java15_x.service;
 
 import com.mcann.java15_x.dto.request.NewPostRequestDto;
+import com.mcann.java15_x.dto.response.AllPostsResponseDto;
 import com.mcann.java15_x.entity.Post;
 import com.mcann.java15_x.entity.PostState;
 import com.mcann.java15_x.exception.ErrorType;
@@ -12,6 +13,8 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -38,5 +41,31 @@ public class PostService {
 //				.build();
 		
 		postRepository.save(post);
+	}
+	
+	public List<Post> getAllMyPosts(String token) {
+		Optional<Long> userId = jwtManager.validateToken(token);
+		if (userId.isEmpty()) {
+			throw new Java15XException(ErrorType.INVALID_TOKEN);
+		}
+		return postRepository.findAllByUserId(userId.get());
+	}
+	
+	public List<AllPostsResponseDto> getAllPosts(String token) {
+		Optional<Long> userId = jwtManager.validateToken(token);
+		if (userId.isEmpty()) {
+			throw new Java15XException(ErrorType.INVALID_TOKEN);
+		}
+		List<Post> postList = postRepository.findAll();
+		/**
+		 * postları kısıtlayın. mesela date'e göre son atılmış 10 post
+		 * post listesinin içinden userid lerin listelerini çıkartın. List<Long> userids
+		 * kullanıcıların listesini Map<Long,User> userList
+		 */
+		List<AllPostsResponseDto> result = new ArrayList<>();
+		postList.forEach(p -> {
+			p.getUserId()
+		});
+		return result;
 	}
 }
