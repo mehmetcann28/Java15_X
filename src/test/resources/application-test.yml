@@ -4,13 +4,13 @@ server:
 spring:
   security:
     user:
-      name: "admin"
-      password: "12345678"
+      name: ${JAVA15_TEST_SECURITY_USERNAME}
+      password: ${JAVA15_TEST_SECURITY_PASSWORD}
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/java15xtest
-    username: postgres
-    password: root
+    url: ${JAVA15_TEST_POSTGRE_URL}
+    username: ${JAVA15_TEST_POSTGRE_USERNAME}
+    password: ${JAVA15_TEST_POSTGRE_PASSWORD}
   jpa:
     hibernate:
       ddl-auto: create-drop
@@ -29,5 +29,5 @@ logging:
 
 java15:
   jwt:
-    secret-key: "123456789"
-    issuer: "BA"
+    secret-key: ${JAVA15_TEST_JWT_SECRETKEY}
+    issuer: ${JAVA15_TEST_JWT_ISSUER}
